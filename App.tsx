@@ -16,15 +16,30 @@ import {
   CustomerDetails,
   More,
   OrderDetails,
+  ProductsSubscreen1,
 } from "./Screens";
 
 const Tab = createCustomTabNavigator();
 const Tab2 = createCustomTabNavigator();
 
+const Stack = createNativeStackNavigator();
+
+const AllProductsNav = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Main Products" component={AllProducts} />
+      <Stack.Screen
+        name="Products Subnavigation"
+        component={ProductsSubscreen1}
+      />
+    </Stack.Navigator>
+  );
+};
+
 const OrderDetailsNav = () => {
   return (
     <Tab.Navigator color="blue">
-      <Tab.Screen name="All Products" component={AllProducts} />
+      <Tab.Screen name="All Products" component={AllProductsNav} />
       <Tab.Screen name="Collections" component={Collections} />
     </Tab.Navigator>
   );
