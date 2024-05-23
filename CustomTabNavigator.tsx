@@ -21,6 +21,7 @@ import {
 } from "@react-navigation/native";
 
 import { DeviceType, getDeviceTypeAsync, deviceType } from "expo-device";
+import { useTabPosition } from "./TabDataProvider";
 
 const { height } = Dimensions.get("screen");
 
@@ -124,6 +125,8 @@ const LeftTabs = ({ color, tabBarStyle, state, navigation, descriptors }) => {
 };
 
 const Dropdown = ({ color, tabBarStyle, state, navigation, descriptors }) => {
+  const pos = useTabPosition();
+
   return (
     <View
       style={[
@@ -134,7 +137,7 @@ const Dropdown = ({ color, tabBarStyle, state, navigation, descriptors }) => {
           minHeight: 100,
           position: "absolute",
           alignSelf: "center",
-          top: 200,
+          top: pos.position.top,
           paddingHorizontal: 30,
         },
         tabBarStyle,
@@ -144,7 +147,6 @@ const Dropdown = ({ color, tabBarStyle, state, navigation, descriptors }) => {
         <Pressable
           key={route.key}
           onPress={() => {
-            console.log("DAN: HELLO");
             const isFocused = state.index === index;
             const event = navigation.emit({
               type: "tabPress",
@@ -234,6 +236,7 @@ function TabNavigator({
   contentStyle,
   color,
   isSubnavigation,
+  pos,
 }: Props) {
   const { state, navigation, descriptors, NavigationContent } =
     useNavigationBuilder<

@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { View, Text, ViewStyle, Button, FlatList } from "react-native";
+import { useTabPosition } from "./TabDataProvider";
 
 const defaultStyle: ViewStyle = {
   justifyContent: "center",
@@ -33,6 +34,7 @@ export const More = () => {
 
 export const AllProducts = () => {
   const { navigate } = useNavigation<any>();
+  const { setPosition } = useTabPosition();
   return (
     <View style={[defaultStyle, { backgroundColor: "grey" }]}>
       <Text>All Products</Text>
@@ -40,6 +42,13 @@ export const AllProducts = () => {
         title="Navigate"
         onPress={() => {
           navigate("Products Subnavigation");
+        }}
+      />
+      <Button
+        title="Move"
+        onPress={() => {
+          // navigate("Products Subnavigation");
+          setPosition({ top: 250 });
         }}
       />
     </View>

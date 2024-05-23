@@ -19,17 +19,14 @@ import {
   More,
   ProductsSubscreen1,
 } from "./Screens";
+import { TabStateProvider } from "./TabDataProvider";
 
 const Tab = createCustomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const AllProductsNav = () => {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        freezeOnBlur: true,
-      }}
-    >
+    <Stack.Navigator>
       <Stack.Screen name="Main Products" component={AllProducts} />
       <Stack.Screen
         name="Products Subnavigation"
@@ -48,18 +45,24 @@ const OrderDetailsNav = () => {
   );
 };
 
+const Main = () => {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator color="red">
+        <Tab.Screen name="Orders" component={OrderDetailsNav} />
+        <Tab.Screen name="Customers" component={CustomerDetails} />
+        <Tab.Screen name="More" component={More} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+};
+
 function App() {
   const colorMode = useColorScheme() as COLORMODES;
   return (
-    <GluestackUIProvider config={config} colorMode={colorMode}>
-      <NavigationContainer>
-        <Tab.Navigator color="red">
-          <Tab.Screen name="Orders" component={OrderDetailsNav} />
-          <Tab.Screen name="Customers" component={CustomerDetails} />
-          <Tab.Screen name="More" component={More} />
-        </Tab.Navigator>
-      </NavigationContainer>
-    </GluestackUIProvider>
+    <TabStateProvider>
+      <Main />
+    </TabStateProvider>
   );
 }
 
