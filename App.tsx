@@ -1,20 +1,30 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { GluestackUIProvider, useColorMode } from "@gluestack-ui/themed";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as React from "react";
 
-export default function App() {
+import { config } from "@gluestack-ui/config";
+import { HomeScreen } from "./HomeScreen";
+import { TodoScreen } from "./TodoScreen";
+import { useColorScheme } from "react-native";
+import { COLORMODES } from "@gluestack-style/react/lib/typescript/types";
+
+import createCustomTabNavigator from "./CustomTabNavigator";
+
+const Tab = createCustomTabNavigator();
+
+function App() {
+  const colorMode = useColorScheme() as COLORMODES;
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <GluestackUIProvider config={config} colorMode={colorMode}>
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Todo" component={TodoScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </GluestackUIProvider>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
