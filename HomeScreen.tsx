@@ -1,15 +1,10 @@
 import {
-  AddIcon,
-  Alert,
   Box,
   Card,
   CheckIcon,
   Checkbox,
   CheckboxIcon,
   CheckboxIndicator,
-  Fab,
-  FabIcon,
-  FabLabel,
   HStack,
   SafeAreaView,
   Text,
@@ -18,9 +13,8 @@ import {
 import { observable } from "@legendapp/state";
 import { observer, useSelector } from "@legendapp/state/react";
 import { useNavigation } from "@react-navigation/native";
-import React, { useRef } from "react";
+import React from "react";
 import { FlatList, useColorScheme } from "react-native";
-import { RenderMeasureComponent } from "./RenderMeasureComponent";
 
 export const data$ = observable({
   value: [

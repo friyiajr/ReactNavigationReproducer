@@ -20,6 +20,8 @@ import {
   useNavigationBuilder,
 } from "@react-navigation/native";
 
+import { DeviceType, getDeviceTypeAsync, deviceType } from "expo-device";
+
 const { height } = Dimensions.get("screen");
 
 // Props accepted by the view
@@ -54,6 +56,175 @@ type Props = DefaultNavigatorOptions<
   TabRouterOptions &
   TabNavigationConfig;
 
+const Layout = ({ state, contentStyle, descriptors }) => {
+  return (
+    <View style={[{ flex: 1 }, contentStyle]}>
+      {state.routes.map((route, i) => {
+        return (
+          <View
+            key={route.key}
+            style={[
+              StyleSheet.absoluteFill,
+              { display: i === state.index ? "flex" : "none" },
+            ]}
+          >
+            {descriptors[route.key].render()}
+          </View>
+        );
+      })}
+    </View>
+  );
+};
+
+const LeftTabs = ({ color, tabBarStyle, state, navigation, descriptors }) => {
+  return (
+    <View
+      style={[
+        {
+          backgroundColor: color,
+          paddingHorizontal: 30,
+          zIndex: 9999,
+          elevation: 99999,
+        },
+        tabBarStyle,
+      ]}
+    >
+      {state.routes.map((route, index) => (
+        <Pressable
+          key={route.key}
+          onPress={() => {
+            const isFocused = state.index === index;
+            const event = navigation.emit({
+              type: "tabPress",
+              target: route.key,
+              canPreventDefault: true,
+              data: {
+                isAlreadyFocused: isFocused,
+              },
+            });
+
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.dispatch({
+                ...CommonActions.navigate(route),
+                target: state.key,
+              });
+            }
+          }}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text>{descriptors[route.key].options.title ?? route.name}</Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+};
+
+const Dropdown = ({ color, tabBarStyle, state, navigation, descriptors }) => {
+  return (
+    <View
+      style={[
+        {
+          backgroundColor: color,
+          paddingHorizontal: 30,
+          zIndex: 9999,
+          elevation: 99999,
+          minHeight: 100,
+          position: "absolute",
+          alignSelf: "center",
+          top: 200,
+        },
+        tabBarStyle,
+      ]}
+    >
+      {state.routes.map((route, index) => (
+        <Pressable
+          key={route.key}
+          onPress={() => {
+            const isFocused = state.index === index;
+            const event = navigation.emit({
+              type: "tabPress",
+              target: route.key,
+              canPreventDefault: true,
+              data: {
+                isAlreadyFocused: isFocused,
+              },
+            });
+
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.dispatch({
+                ...CommonActions.navigate(route),
+                target: state.key,
+              });
+            }
+          }}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            borderBottomColor: "black",
+            borderBottomWidth: 1,
+          }}
+        >
+          <Text>{descriptors[route.key].options.title ?? route.name}</Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+};
+
+const BottomTabs = ({ color, tabBarStyle, state, navigation, descriptors }) => {
+  return (
+    <View
+      style={[
+        {
+          backgroundColor: color,
+          paddingHorizontal: 30,
+          zIndex: 9999,
+          elevation: 99999,
+          height: 100,
+          flexDirection: "row",
+        },
+        tabBarStyle,
+      ]}
+    >
+      {state.routes.map((route, index) => (
+        <Pressable
+          key={route.key}
+          onPress={() => {
+            const isFocused = state.index === index;
+            const event = navigation.emit({
+              type: "tabPress",
+              target: route.key,
+              canPreventDefault: true,
+              data: {
+                isAlreadyFocused: isFocused,
+              },
+            });
+
+            if (!isFocused && !event.defaultPrevented) {
+              navigation.dispatch({
+                ...CommonActions.navigate(route),
+                target: state.key,
+              });
+            }
+          }}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text>{descriptors[route.key].options.title ?? route.name}</Text>
+        </Pressable>
+      ))}
+    </View>
+  );
+};
+
 function TabNavigator({
   initialRouteName,
   children,
@@ -61,6 +232,7 @@ function TabNavigator({
   tabBarStyle,
   contentStyle,
   color,
+  isSubnavigation,
 }: Props) {
   const { state, navigation, descriptors, NavigationContent } =
     useNavigationBuilder<
@@ -75,66 +247,52 @@ function TabNavigator({
       initialRouteName,
     });
 
+  console.log("DAN:   ~ isSubnavigation:", isSubnavigation);
+
   return (
     <NavigationContent>
-      <View style={{ flex: 1, flexDirection: "row" }}>
-        <View
-          style={[
-            {
-              backgroundColor: color,
-              paddingHorizontal: 30,
-              zIndex: 9999,
-              elevation: 99999,
-            },
-            tabBarStyle,
-          ]}
-        >
-          {state.routes.map((route, index) => (
-            <Pressable
-              key={route.key}
-              onPress={() => {
-                const isFocused = state.index === index;
-                const event = navigation.emit({
-                  type: "tabPress",
-                  target: route.key,
-                  canPreventDefault: true,
-                  data: {
-                    isAlreadyFocused: isFocused,
-                  },
-                });
+      <View
+        style={{
+          flex: 1,
+          flexDirection:
+            deviceType === DeviceType.TABLET ? "row" : "column-reverse",
+        }}
+      >
+        {deviceType === DeviceType.TABLET ? (
+          <LeftTabs
+            color={color}
+            descriptors={descriptors}
+            navigation={navigation}
+            state={state}
+            tabBarStyle={tabBarStyle}
+          />
+        ) : null}
 
-                if (!isFocused && !event.defaultPrevented) {
-                  navigation.dispatch({
-                    ...CommonActions.navigate(route),
-                    target: state.key,
-                  });
-                }
-              }}
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text>{descriptors[route.key].options.title ?? route.name}</Text>
-            </Pressable>
-          ))}
-        </View>
-        <View style={[{ flex: 1 }, contentStyle]}>
-          {state.routes.map((route, i) => {
-            return (
-              <View
-                key={route.key}
-                style={[
-                  StyleSheet.absoluteFill,
-                  { display: i === state.index ? "flex" : "none" },
-                ]}
-              >
-                {descriptors[route.key].render()}
-              </View>
-            );
-          })}
-        </View>
+        {deviceType !== DeviceType.TABLET && !isSubnavigation ? (
+          <BottomTabs
+            color={color}
+            descriptors={descriptors}
+            navigation={navigation}
+            state={state}
+            tabBarStyle={tabBarStyle}
+          />
+        ) : null}
+
+        {deviceType !== DeviceType.TABLET && isSubnavigation ? (
+          <Dropdown
+            color={color}
+            descriptors={descriptors}
+            navigation={navigation}
+            state={state}
+            tabBarStyle={tabBarStyle}
+          />
+        ) : null}
+
+        <Layout
+          state={state}
+          contentStyle={contentStyle}
+          descriptors={descriptors}
+        />
       </View>
     </NavigationContent>
   );

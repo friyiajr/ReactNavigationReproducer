@@ -3,8 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 
-import * as ScreenOrientation from "expo-screen-orientation";
-ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+// import * as ScreenOrientation from "expo-screen-orientation";
+// ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
 
 import { COLORMODES } from "@gluestack-style/react/lib/typescript/types";
 import { config } from "@gluestack-ui/config";
@@ -21,7 +21,6 @@ import {
 } from "./Screens";
 
 const Tab = createCustomTabNavigator();
-
 const Stack = createNativeStackNavigator();
 
 const AllProductsNav = () => {
@@ -42,7 +41,7 @@ const AllProductsNav = () => {
 
 const OrderDetailsNav = () => {
   return (
-    <Tab.Navigator color="blue">
+    <Tab.Navigator color="blue" isSubnavigation>
       <Tab.Screen name="All Products" component={AllProductsNav} />
       <Tab.Screen name="Collections" component={Collections} />
     </Tab.Navigator>
