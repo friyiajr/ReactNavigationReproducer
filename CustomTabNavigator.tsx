@@ -91,7 +91,6 @@ function TabNavigator({
             <Pressable
               key={route.key}
               onPress={() => {
-                console.log(route.key);
                 const isFocused = state.index === index;
                 const event = navigation.emit({
                   type: "tabPress",

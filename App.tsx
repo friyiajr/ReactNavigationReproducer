@@ -20,7 +20,6 @@ import {
 } from "./Screens";
 
 const Tab = createCustomTabNavigator();
-const Tab2 = createCustomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
