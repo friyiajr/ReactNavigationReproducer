@@ -10,15 +10,22 @@ import { useColorScheme } from "react-native";
 import { COLORMODES } from "@gluestack-style/react/lib/typescript/types";
 
 import createCustomTabNavigator from "./CustomTabNavigator";
+import {
+  AllProducts,
+  Collections,
+  CustomerDetails,
+  More,
+  OrderDetails,
+} from "./Screens";
 
 const Tab = createCustomTabNavigator();
 const Tab2 = createCustomTabNavigator();
 
-const Nav2 = () => {
+const OrderDetailsNav = () => {
   return (
     <Tab.Navigator color="blue">
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Todo" component={TodoScreen} />
+      <Tab.Screen name="All Products" component={AllProducts} />
+      <Tab.Screen name="Collections" component={Collections} />
     </Tab.Navigator>
   );
 };
@@ -29,9 +36,9 @@ function App() {
     <GluestackUIProvider config={config} colorMode={colorMode}>
       <NavigationContainer>
         <Tab.Navigator color="red">
-          <Tab.Screen name="Home" component={HomeScreen} />
-          <Tab.Screen name="Todo" component={TodoScreen} />
-          <Tab.Screen name="Nav2" component={Nav2} />
+          <Tab.Screen name="Order Details" component={OrderDetailsNav} />
+          <Tab.Screen name="Customer Details" component={CustomerDetails} />
+          <Tab.Screen name="More" component={More} />
         </Tab.Navigator>
       </NavigationContainer>
     </GluestackUIProvider>
