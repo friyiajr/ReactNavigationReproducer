@@ -60,6 +60,7 @@ function TabNavigator({
   screenOptions,
   tabBarStyle,
   contentStyle,
+  color,
 }: Props) {
   const { state, navigation, descriptors, NavigationContent } =
     useNavigationBuilder<
@@ -76,59 +77,63 @@ function TabNavigator({
 
   return (
     <NavigationContent>
-      <View style={[{ flex: 1 }, contentStyle]}>
-        {state.routes.map((route, i) => {
-          return (
-            <View
+      <View style={{ flex: 1, flexDirection: "row" }}>
+        <View
+          style={[
+            {
+              backgroundColor: color,
+              paddingHorizontal: 30,
+            },
+            tabBarStyle,
+          ]}
+        >
+          {state.routes.map((route, index) => (
+            <Pressable
               key={route.key}
-              style={[
-                StyleSheet.absoluteFill,
-                { display: i === state.index ? "flex" : "none" },
-              ]}
-            >
-              {descriptors[route.key].render()}
-            </View>
-          );
-        })}
-      </View>
-      <View
-        style={[
-          {
-            backgroundColor: "red",
-            position: "absolute",
-            height,
-            width: 100,
-          },
-          tabBarStyle,
-        ]}
-      >
-        {state.routes.map((route, index) => (
-          <Pressable
-            key={route.key}
-            onPress={() => {
-              console.log(route.key);
-              const isFocused = state.index === index;
-              const event = navigation.emit({
-                type: "tabPress",
-                target: route.key,
-                canPreventDefault: true,
-                data: {
-                  isAlreadyFocused: isFocused,
-                },
-              });
-
-              if (!isFocused && !event.defaultPrevented) {
-                navigation.dispatch({
-                  ...CommonActions.navigate(route),
-                  target: state.key,
+              onPress={() => {
+                console.log(route.key);
+                const isFocused = state.index === index;
+                const event = navigation.emit({
+                  type: "tabPress",
+                  target: route.key,
+                  canPreventDefault: true,
+                  data: {
+                    isAlreadyFocused: isFocused,
+                  },
                 });
-              }
-            }}
-            style={{ flex: 1 }}
-          >
-            <Text>{descriptors[route.key].options.title ?? route.name}</Text>
-          </Pressable>
-        ))}
+
+                if (!isFocused && !event.defaultPrevented) {
+                  navigation.dispatch({
+                    ...CommonActions.navigate(route),
+                    target: state.key,
+                  });
+                }
+              }}
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text>{descriptors[route.key].options.title ?? route.name}</Text>
+            </Pressable>
+          ))}
+        </View>
+        <View style={[{ flex: 1 }, contentStyle]}>
+          {state.routes.map((route, i) => {
+            return (
+              <View
+                key={route.key}
+                style={[
+                  StyleSheet.absoluteFill,
+                  { display: i === state.index ? "flex" : "none" },
+                ]}
+              >
+                {descriptors[route.key].render()}
+              </View>
+            );
+          })}
+        </View>
       </View>
     </NavigationContent>
   );

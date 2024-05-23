@@ -12,15 +12,26 @@ import { COLORMODES } from "@gluestack-style/react/lib/typescript/types";
 import createCustomTabNavigator from "./CustomTabNavigator";
 
 const Tab = createCustomTabNavigator();
+const Tab2 = createCustomTabNavigator();
+
+const Nav2 = () => {
+  return (
+    <Tab.Navigator color="blue">
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Todo" component={TodoScreen} />
+    </Tab.Navigator>
+  );
+};
 
 function App() {
   const colorMode = useColorScheme() as COLORMODES;
   return (
     <GluestackUIProvider config={config} colorMode={colorMode}>
       <NavigationContainer>
-        <Tab.Navigator>
+        <Tab.Navigator color="red">
           <Tab.Screen name="Home" component={HomeScreen} />
           <Tab.Screen name="Todo" component={TodoScreen} />
+          <Tab.Screen name="Nav2" component={Nav2} />
         </Tab.Navigator>
       </NavigationContainer>
     </GluestackUIProvider>
