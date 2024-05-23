@@ -58,7 +58,7 @@ type Props = DefaultNavigatorOptions<
 
 const Layout = ({ state, contentStyle, descriptors }) => {
   return (
-    <View style={[{ flex: 1 }, contentStyle]}>
+    <View style={[{ flex: 1 }]}>
       {state.routes.map((route, i) => {
         return (
           <View
@@ -129,13 +129,13 @@ const Dropdown = ({ color, tabBarStyle, state, navigation, descriptors }) => {
       style={[
         {
           backgroundColor: color,
-          paddingHorizontal: 30,
           zIndex: 9999,
           elevation: 99999,
           minHeight: 100,
           position: "absolute",
           alignSelf: "center",
           top: 200,
+          paddingHorizontal: 30,
         },
         tabBarStyle,
       ]}
@@ -144,6 +144,7 @@ const Dropdown = ({ color, tabBarStyle, state, navigation, descriptors }) => {
         <Pressable
           key={route.key}
           onPress={() => {
+            console.log("DAN: HELLO");
             const isFocused = state.index === index;
             const event = navigation.emit({
               type: "tabPress",
@@ -247,8 +248,6 @@ function TabNavigator({
       initialRouteName,
     });
 
-  console.log("DAN:   ~ isSubnavigation:", isSubnavigation);
-
   return (
     <NavigationContent>
       <View
@@ -278,6 +277,12 @@ function TabNavigator({
           />
         ) : null}
 
+        <Layout
+          state={state}
+          contentStyle={contentStyle}
+          descriptors={descriptors}
+        />
+
         {deviceType !== DeviceType.TABLET && isSubnavigation ? (
           <Dropdown
             color={color}
@@ -287,12 +292,6 @@ function TabNavigator({
             tabBarStyle={tabBarStyle}
           />
         ) : null}
-
-        <Layout
-          state={state}
-          contentStyle={contentStyle}
-          descriptors={descriptors}
-        />
       </View>
     </NavigationContent>
   );
