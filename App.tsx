@@ -26,7 +26,11 @@ const Stack = createNativeStackNavigator();
 
 const AllProductsNav = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        freezeOnBlur: true,
+      }}
+    >
       <Stack.Screen name="Main Products" component={AllProducts} />
       <Stack.Screen
         name="Products Subnavigation"
