@@ -83,6 +83,8 @@ function TabNavigator({
             {
               backgroundColor: color,
               paddingHorizontal: 30,
+              zIndex: 9999,
+              elevation: 99999,
             },
             tabBarStyle,
           ]}
