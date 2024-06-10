@@ -27,13 +27,13 @@ export const CustomerDetails = () => {
   const { navigate } = useNavigation<any>();
   return (
     <View style={[defaultStyle, { backgroundColor: "green" }]}>
-      <Pressable
+      <Button
         onPress={() => {
+          console.log("OK");
           navigate("MoreStack");
         }}
-      >
-        <Text>Customer Details</Text>
-      </Pressable>
+        title="Customer Details"
+      />
     </View>
   );
 };
@@ -41,7 +41,12 @@ export const CustomerDetails = () => {
 export const More = () => {
   const { navigate } = useNavigation<any>();
   return (
-    <View style={[defaultStyle, { backgroundColor: "orange" }]}>
+    <Pressable
+      style={[defaultStyle, { flex: 1, backgroundColor: "orange" }]}
+      onPress={() => {
+        console.log("MORE PRESSED");
+      }}
+    >
       <Pressable
         onPress={() => {
           navigate("Collections");
@@ -49,7 +54,7 @@ export const More = () => {
       >
         <Text>More</Text>
       </Pressable>
-    </View>
+    </Pressable>
   );
 };
 
