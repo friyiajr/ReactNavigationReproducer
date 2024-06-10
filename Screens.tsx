@@ -6,6 +6,7 @@ import {
   Button,
   FlatList,
   Pressable,
+  StyleSheet,
 } from "react-native";
 import { useTabPosition } from "./TabDataProvider";
 
@@ -42,7 +43,7 @@ export const More = () => {
   const { navigate } = useNavigation<any>();
   return (
     <Pressable
-      style={[defaultStyle, { flex: 1, backgroundColor: "orange" }]}
+      style={[defaultStyle, { backgroundColor: "orange" }]}
       onPress={() => {
         console.log("MORE PRESSED");
       }}
