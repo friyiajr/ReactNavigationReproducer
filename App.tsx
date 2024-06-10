@@ -1,17 +1,17 @@
 import { GluestackUIProvider } from "@gluestack-ui/themed";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 // import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 
-// import * as ScreenOrientation from "expo-screen-orientation";
-// ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
+import * as ScreenOrientation from "expo-screen-orientation";
+ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE);
 
 import { COLORMODES } from "@gluestack-style/react/lib/typescript/types";
 import { config } from "@gluestack-ui/config";
-import { useColorScheme } from "react-native";
+import { Button, Platform, View, useColorScheme } from "react-native";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import createCustomTabNavigator from "./CustomTabNavigator";
+
 import {
   AllProducts,
   Collections,
@@ -20,11 +20,16 @@ import {
   ProductsSubscreen1,
 } from "./Screens";
 import { TabStateProvider } from "./TabDataProvider";
+import {
+  CardStyleInterpolators,
+  TransitionSpecs,
+  createStackNavigator,
+} from "@react-navigation/stack";
 
-const Tab = createCustomTabNavigator();
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
+const InnerStack = createNativeStackNavigator();
 
-const AllProductsNav = () => {
+const CustomersIndexList = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Main Products" component={AllProducts} />
@@ -36,34 +41,53 @@ const AllProductsNav = () => {
   );
 };
 
-const OrderDetailsNav = () => {
+const MoreStack = () => {
+  const { goBack } = useNavigation();
   return (
-    <Tab.Navigator color="blue" isSubnavigation>
-      <Tab.Screen name="All Products" component={AllProductsNav} />
-      <Tab.Screen name="Collections" component={Collections} />
-    </Tab.Navigator>
+    <InnerStack.Navigator
+      screenOptions={{
+        headerRight: () => (
+          <Button onPress={() => goBack()} title="X" color="black" />
+        ),
+      }}
+    >
+      <InnerStack.Screen name="More" component={More} />
+      <InnerStack.Screen name="Collections" component={Collections} />
+    </InnerStack.Navigator>
   );
 };
 
 const Main = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator color="red">
-        <Tab.Screen name="Orders" component={OrderDetailsNav} />
-        <Tab.Screen name="Customers" component={CustomerDetails} />
-        <Tab.Screen name="More" component={More} />
-      </Tab.Navigator>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Customers"
+          component={CustomerDetails}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MoreStack"
+          component={MoreStack}
+          options={{
+            presentation: "transparentModal",
+            headerShown: false,
+            cardOverlayEnabled: false,
+            cardStyle: {
+              marginHorizontal: 50,
+              marginTop: 80,
+            },
+            cardStyleInterpolator:
+              CardStyleInterpolators.forFadeFromBottomAndroid,
+          }}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 function App() {
-  const colorMode = useColorScheme() as COLORMODES;
-  return (
-    <TabStateProvider>
-      <Main />
-    </TabStateProvider>
-  );
+  return <Main />;
 }
 
 export default App;

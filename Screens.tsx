@@ -1,5 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
-import { View, Text, ViewStyle, Button, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  ViewStyle,
+  Button,
+  FlatList,
+  Pressable,
+} from "react-native";
 import { useTabPosition } from "./TabDataProvider";
 
 const defaultStyle: ViewStyle = {
@@ -17,17 +24,31 @@ export const OrderDetails = () => {
 };
 
 export const CustomerDetails = () => {
+  const { navigate } = useNavigation<any>();
   return (
     <View style={[defaultStyle, { backgroundColor: "green" }]}>
-      <Text>Customer Details</Text>
+      <Pressable
+        onPress={() => {
+          navigate("MoreStack");
+        }}
+      >
+        <Text>Customer Details</Text>
+      </Pressable>
     </View>
   );
 };
 
 export const More = () => {
+  const { navigate } = useNavigation<any>();
   return (
     <View style={[defaultStyle, { backgroundColor: "orange" }]}>
-      <Text>More</Text>
+      <Pressable
+        onPress={() => {
+          navigate("Collections");
+        }}
+      >
+        <Text>More</Text>
+      </Pressable>
     </View>
   );
 };
