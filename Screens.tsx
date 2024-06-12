@@ -27,7 +27,7 @@ export const OrderDetails = () => {
 export const CustomerDetails = () => {
   const { navigate } = useNavigation<any>();
   return (
-    <View style={[defaultStyle, { backgroundColor: "green" }]}>
+    <View style={[defaultStyle, { backgroundColor: "lightgreen" }]}>
       <Button
         onPress={() => {
           console.log("OK");
