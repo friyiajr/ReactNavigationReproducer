@@ -4245,6 +4245,11 @@ detect-libc@^1.0.3:
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
   integrity sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==
 
+device-info@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/device-info/-/device-info-1.0.3.tgz#0a34a05d79baac242540faec674fccb3c5ed7f26"
+  integrity sha512-bRWTz4WY69OFyqWe9uVjdb7HOCqxk8fHI8KqbVzsTle2R5mF+STr1T9FQxUkLH3WyjqmSrSwcQl+kNujN6o2zA==
+
 dir-glob@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/dir-glob/-/dir-glob-3.0.1.tgz#56dbf73d992a4a93ba1584f4534063fd2e41717f"

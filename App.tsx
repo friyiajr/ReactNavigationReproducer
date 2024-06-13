@@ -6,6 +6,12 @@ import {
   createNativeStackNavigator,
 } from "@react-navigation/native-stack";
 import { Collections, CustomerDetails, More } from "./Screens";
+import {
+  mobileDeviceModalStack,
+  tabletDeviceModalStack,
+} from "./navigation/StackOptions";
+
+import * as Device from "expo-device";
 
 const Stack = createNativeStackNavigator();
 const InnerStack = createNativeStackNavigator();
@@ -26,19 +32,6 @@ const MoreStack = () => {
           headerTintColor: "white",
           headerBackVisible: true,
           headerBackImageSource: image,
-
-          // headerLeft: (props) => {
-          //   return (
-          //     <Pressable
-          //       style={{ backgroundColor: "purple" }}
-          //       onPress={() => {
-          //         goBack();
-          //       }}
-          //     >
-          //       <Text style={{ color: "white" }}>BACK BUTTON</Text>
-          //     </Pressable>
-          //   );
-          // },
           headerTitle: (props) => {
             return (
               <View
@@ -86,7 +79,6 @@ const MoreStack = () => {
 
 const options: NativeStackNavigationOptions = {
   presentation: Platform.OS === "ios" ? "modal" : "transparentModal",
-
   headerShown: false,
   contentStyle: {
     backfaceVisibility: "hidden",
@@ -97,10 +89,17 @@ const options: NativeStackNavigationOptions = {
     paddingTop: Platform.OS === "android" ? 50 : undefined,
   },
   animationTypeForReplace: "push",
-  animation: Platform.OS === "android" ? "fade" : "fade_from_bottom",
+  animation: "fade_from_bottom",
 };
 
 const Main = () => {
+  const [isTablet, setIsTablet] = React.useState(false);
+  React.useEffect(() => {
+    Device.getDeviceTypeAsync().then((device) => {
+      setIsTablet(device === Device.DeviceType.TABLET);
+    });
+  }, []);
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -108,7 +107,11 @@ const Main = () => {
         component={CustomerDetails}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="MoreStack" component={MoreStack} options={options} />
+      <Stack.Screen
+        name="MoreStack"
+        component={MoreStack}
+        options={isTablet ? tabletDeviceModalStack : mobileDeviceModalStack}
+      />
     </Stack.Navigator>
   );
 };
