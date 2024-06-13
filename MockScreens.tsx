@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import { Button, View, ViewStyle, Image } from "react-native";
 
-export const chevron = require("./assets/chevron.png");
-export const exit = require("./assets/x.png");
+export const chevron = require("./img/chevron.png");
+export const exit = require("./img/x.png");
 
 const defaultStyle: ViewStyle = {
   justifyContent: "center",

@@ -25,8 +25,15 @@ export const InfiniteScreen = ({ route }) => {
   const previous = route?.params?.previous ?? 0;
   const thisIndex: number = previous + 1;
 
-  const { navigate, setOptions, push, addListener, dispatch, canGoBack } =
-    useNavigation<any>();
+  const {
+    navigate,
+    setOptions,
+    push,
+    addListener,
+    dispatch,
+    canGoBack,
+    goBack,
+  } = useNavigation<any>();
   const leftColor = useRef(getRandomRGBA());
   const rightColor = useRef(getRandomRGBA());
   const [preventCanGoBack, setPreventCanGoBack] = useState(false);
@@ -56,7 +63,7 @@ export const InfiniteScreen = ({ route }) => {
     );
   });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setOptions({
       title: title.current,
       headerBackImageSource: backImage.current,
