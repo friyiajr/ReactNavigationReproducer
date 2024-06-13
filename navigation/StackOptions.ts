@@ -1,7 +1,7 @@
 import { NativeStackNavigationOptions } from "@react-navigation/native-stack";
 import { Platform } from "react-native";
 
-export const mobileDeviceModalStack: NativeStackNavigationOptions = {
+export const mobileWindowedModalStackOptions: NativeStackNavigationOptions = {
   presentation: "modal",
   headerShown: false,
   contentStyle: {
@@ -11,7 +11,7 @@ export const mobileDeviceModalStack: NativeStackNavigationOptions = {
   animation: "fade_from_bottom",
 };
 
-export const tabletDeviceModalStack: NativeStackNavigationOptions =  {
+export const tabletWindowedModalStackOptions: NativeStackNavigationOptions =  {
   presentation: Platform.OS === "ios" ? "modal" : "transparentModal",
   headerShown: false,
   contentStyle: {
@@ -23,6 +23,25 @@ export const tabletDeviceModalStack: NativeStackNavigationOptions =  {
     paddingTop: Platform.OS === "android" ? 50 : undefined,
   },
   animationTypeForReplace: "push",
-  animation: Platform.OS === 'ios' ? "fade_from_bottom" : 'fade',
+  animation: Platform.OS === 'ios' ? "fade_from_bottom" : 'fade', 
+  
+}
+
+export const mobileFullscreenModalStackOptions: NativeStackNavigationOptions = {
+  presentation: "fullScreenModal",
+  headerShown: false,
+  contentStyle: {
+    flex: 1,
+  },
+  animationTypeForReplace: "push",
+  animation: "fade_from_bottom",
+  gestureEnabled: false,
+};
+
+export const tabletFullscreenModalStackOptions: NativeStackNavigationOptions =  {
+  presentation: Platform.OS === "ios" ? "fullScreenModal" : "transparentModal",
+  headerShown: false,
+  animationTypeForReplace: "push",
+  animation: Platform.OS === 'ios' ? undefined : "fade_from_bottom",
 }
 

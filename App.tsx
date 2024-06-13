@@ -1,99 +1,27 @@
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { Platform, View, Text, Pressable } from "react-native";
+import { Home as Home } from "./MockScreens";
 import {
-  NativeStackNavigationOptions,
-  createNativeStackNavigator,
-} from "@react-navigation/native-stack";
-import { Collections, CustomerDetails, More } from "./Screens";
-import {
-  mobileDeviceModalStack,
-  tabletDeviceModalStack,
+  mobileWindowedModalStackOptions,
+  mobileFullscreenModalStackOptions,
+  tabletWindowedModalStackOptions,
+  tabletFullscreenModalStackOptions,
 } from "./navigation/StackOptions";
 
 import * as Device from "expo-device";
+import {
+  CardModalStack,
+  FullscreenModalStack,
+  ScreenStack,
+} from "./screens/ModalStack";
 
 const Stack = createNativeStackNavigator();
-const InnerStack = createNativeStackNavigator();
-
-const image = require("./arrow3.png");
-
-const MoreStack = () => {
-  const { goBack } = useNavigation();
-  return (
-    <View style={{ flex: 1, overflow: "hidden" }}>
-      <InnerStack.Navigator
-        screenOptions={{
-          headerTitleAlign: "center",
-          headerStyle: {
-            backgroundColor: "black",
-          },
-          headerBlurEffect: "systemThickMaterial",
-          headerTintColor: "white",
-          headerBackVisible: true,
-          headerBackImageSource: image,
-          headerTitle: (props) => {
-            return (
-              <View
-                style={{
-                  backgroundColor: "red",
-                }}
-              >
-                <View style={{ flexDirection: "row", gap: 20 }}>
-                  <View style={{ backgroundColor: "purple" }}>
-                    <Text style={{ color: "white" }}>CUSTOM BUTTON 1</Text>
-                  </View>
-                  <View style={{ backgroundColor: "teal" }}>
-                    <Text style={{ color: "white" }}>CUSTOM BUTTON 2</Text>
-                  </View>
-                </View>
-              </View>
-            );
-          },
-          headerRight: (props) => {
-            return (
-              <View
-                style={{
-                  backgroundColor: "red",
-                  flexDirection: "row",
-                  gap: 20,
-                }}
-              >
-                <View style={{ backgroundColor: "purple" }}>
-                  <Text style={{ color: "white" }}>PIN</Text>
-                </View>
-                <Pressable style={{ backgroundColor: "teal" }} onPress={goBack}>
-                  <Text style={{ color: "white" }}>EXIT</Text>
-                </Pressable>
-              </View>
-            );
-          },
-        }}
-      >
-        <InnerStack.Screen name="More" component={More} />
-        <InnerStack.Screen name="Collections" component={Collections} />
-      </InnerStack.Navigator>
-    </View>
-  );
-};
-
-const options: NativeStackNavigationOptions = {
-  presentation: Platform.OS === "ios" ? "modal" : "transparentModal",
-  headerShown: false,
-  contentStyle: {
-    backfaceVisibility: "hidden",
-    flex: 1,
-    overflow: "hidden",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    paddingHorizontal: Platform.OS === "android" ? "15%" : undefined,
-    paddingTop: Platform.OS === "android" ? 50 : undefined,
-  },
-  animationTypeForReplace: "push",
-  animation: "fade_from_bottom",
-};
 
 const Main = () => {
+  // TODO: I don't have isTablet in this code base so this is my replacement
   const [isTablet, setIsTablet] = React.useState(false);
+
   React.useEffect(() => {
     Device.getDeviceTypeAsync().then((device) => {
       setIsTablet(device === Device.DeviceType.TABLET);
@@ -103,14 +31,34 @@ const Main = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Customers"
-        component={CustomerDetails}
+        name="Home"
+        component={Home}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="MoreStack"
-        component={MoreStack}
-        options={isTablet ? tabletDeviceModalStack : mobileDeviceModalStack}
+        name="CardModalStack"
+        component={CardModalStack}
+        options={
+          isTablet
+            ? tabletWindowedModalStackOptions
+            : mobileWindowedModalStackOptions
+        }
+      />
+      <Stack.Screen
+        name="FullScreenModalStack"
+        component={FullscreenModalStack}
+        options={
+          isTablet
+            ? tabletFullscreenModalStackOptions
+            : mobileFullscreenModalStackOptions
+        }
+      />
+      <Stack.Screen
+        name="ScreenStack"
+        component={ScreenStack}
+        options={{
+          headerShown: false,
+        }}
       />
     </Stack.Navigator>
   );
