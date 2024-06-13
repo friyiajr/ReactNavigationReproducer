@@ -67,7 +67,6 @@ export const InfiniteScreen = ({ route }) => {
     setOptions({
       title: title.current,
       headerBackImageSource: backImage.current,
-
       headerRight: () => (
         <Pressable
           onPress={() => {

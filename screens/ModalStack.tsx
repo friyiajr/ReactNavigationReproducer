@@ -39,25 +39,7 @@ export const ScreenStack = () => {
           headerBackTitleVisible: false,
         }}
       >
-        <InnerStack.Screen
-          name="InfiniteScreen"
-          component={InfiniteScreen}
-          // options={{
-          //   headerLeft: (props) => {
-          //     const nav = useNavigation();
-
-          //     return (
-          //       <Pressable
-          //         onPress={() => {
-          //           nav.goBack();
-          //         }}
-          //       >
-          //         <Text style={{ color: "white" }}>Hello</Text>
-          //       </Pressable>
-          //     );
-          //   },
-          // }}
-        />
+        <InnerStack.Screen name="InfiniteScreen" component={InfiniteScreen} />
       </InnerStack.Navigator>
     </View>
   );

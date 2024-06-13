@@ -15,6 +15,7 @@ import {
   FullscreenModalStack,
   ScreenStack,
 } from "./screens/ModalStack";
+import { InfiniteScreen } from "./screens/InfiniteScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -53,13 +54,14 @@ const Main = () => {
             : mobileFullscreenModalStackOptions
         }
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="ScreenStack"
         component={ScreenStack}
         options={{
           headerShown: false,
         }}
-      />
+      /> */}
+      <Stack.Screen name="InfiniteScreen2" component={InfiniteScreen} />
     </Stack.Navigator>
   );
 };
