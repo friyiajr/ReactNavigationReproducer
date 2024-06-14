@@ -18,7 +18,7 @@ export const tabletWindowedModalStackOptions: NativeStackNavigationOptions =  {
     backfaceVisibility: "hidden",
     flex: 1,
     overflow: "hidden",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.2)",
     paddingHorizontal: Platform.OS === "android" ? "15%" : undefined,
     paddingTop: Platform.OS === "android" ? 50 : undefined,
   },

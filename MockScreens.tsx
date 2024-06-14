@@ -32,7 +32,6 @@ export const Home = ({ thisIndex, blockBackCallback }: Props) => {
       </Text>
       <Button
         onPress={() => {
-          console.log("OK");
           push("CardModalStack", {
             previous: thisIndex ?? 0,
             type: "CardModalStack",
@@ -42,7 +41,6 @@ export const Home = ({ thisIndex, blockBackCallback }: Props) => {
       />
       <Button
         onPress={() => {
-          console.log("OK");
           push("FullScreenModalStack", {
             previous: thisIndex ?? 0,
             type: "FullScreenModalStack",
@@ -52,7 +50,6 @@ export const Home = ({ thisIndex, blockBackCallback }: Props) => {
       />
       <Button
         onPress={() => {
-          console.log("OK");
           push("InfiniteScreen", {
             previous: thisIndex ?? 0,
             type: "InfiniteScreen",

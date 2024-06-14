@@ -3,7 +3,7 @@ import {
   useNavigation,
 } from "@react-navigation/native";
 import React, { useLayoutEffect, useRef, useState } from "react";
-import { Alert, Pressable, Text, View } from "react-native";
+import { Alert, Platform, Pressable, Text, View } from "react-native";
 import { Home, chevron, exit } from "../MockScreens";
 
 const getRandomRGBA = () => {
@@ -64,6 +64,7 @@ export const InfiniteScreen = ({ route }: any) => {
     setOptions({
       title: title.current,
       headerBackImageSource: backImage.current,
+
       headerRight: () => (
         <Pressable
           onPress={() => {
