@@ -1,19 +1,10 @@
 import {
   UNSTABLE_usePreventRemove,
-  useFocusEffect,
   useNavigation,
 } from "@react-navigation/native";
-import React, {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-import { Alert, Button, Pressable, Text, View } from "react-native";
-import { chevron, exit } from "../MockScreens";
-
-let i = 1;
+import React, { useLayoutEffect, useRef, useState } from "react";
+import { Alert, Pressable, Text, View } from "react-native";
+import { Home, chevron, exit } from "../MockScreens";
 
 const getRandomRGBA = () => {
   return `rgba(${Math.floor(Math.random() * 255) + 1}, ${
@@ -21,7 +12,7 @@ const getRandomRGBA = () => {
   } ,${Math.floor(Math.random() * 255) + 1} ,0.5)`;
 };
 
-export const InfiniteScreen = ({ route }) => {
+export const InfiniteScreen = ({ route }: any) => {
   const previous = route?.params?.previous ?? 0;
   const thisIndex: number = previous + 1;
 
@@ -33,10 +24,16 @@ export const InfiniteScreen = ({ route }) => {
     dispatch,
     canGoBack,
     goBack,
+    dismiss,
+    getParent,
   } = useNavigation<any>();
   const leftColor = useRef(getRandomRGBA());
   const rightColor = useRef(getRandomRGBA());
   const [preventCanGoBack, setPreventCanGoBack] = useState(false);
+
+  const blockBackCallback = () => {
+    setPreventCanGoBack(true);
+  };
 
   const title = useRef(`S-${thisIndex}`);
 
@@ -70,7 +67,12 @@ export const InfiniteScreen = ({ route }) => {
       headerRight: () => (
         <Pressable
           onPress={() => {
-            navigate("Home");
+            const parent = getParent();
+            if (parent) {
+              parent.goBack();
+            } else {
+              goBack();
+            }
           }}
         >
           <Text style={{ color: "white" }}>Exit</Text>
@@ -107,29 +109,5 @@ export const InfiniteScreen = ({ route }) => {
     });
   }, []);
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        gap: 20,
-      }}
-    >
-      <Button
-        title="Next Screen"
-        onPress={() => {
-          push("InfiniteScreen", {
-            previous: thisIndex,
-          });
-        }}
-      />
-      <Button
-        title="Block Back"
-        onPress={() => {
-          setPreventCanGoBack(true);
-        }}
-      />
-    </View>
-  );
+  return <Home thisIndex={thisIndex} blockBackCallback={blockBackCallback} />;
 };

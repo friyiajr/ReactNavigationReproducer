@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Button, View, ViewStyle, Image, Text } from "react-native";
+import { Button, View, ViewStyle, Image, Text, Platform } from "react-native";
 
 export const chevron = require("./img/chevron.png");
 export const exit = require("./img/x.png");
@@ -10,32 +10,64 @@ const defaultStyle: ViewStyle = {
   flex: 1,
 };
 
-export const Home = () => {
-  const { navigate } = useNavigation<any>();
+interface Props {
+  thisIndex?: number;
+  blockBackCallback?: () => void;
+}
+
+export const Home = ({ thisIndex, blockBackCallback }: Props) => {
+  const { navigate, push } = useNavigation<any>();
   return (
-    <View style={[defaultStyle, { backgroundColor: "lightgreen", gap: 20 }]}>
-      <Text style={{ fontWeight: "bold", fontSize: 40 }}>DEBUG MODE</Text>
+    <View
+      style={[
+        defaultStyle,
+        {
+          backgroundColor: Platform.OS === "android" ? "lightgreen" : "white",
+          gap: 20,
+        },
+      ]}
+    >
+      <Text style={{ fontWeight: "bold", fontSize: 25 }}>
+        INFINITE SCREEN DEMO
+      </Text>
       <Button
         onPress={() => {
           console.log("OK");
-          navigate("CardModalStack");
+          push("CardModalStack", {
+            previous: thisIndex ?? 0,
+            type: "CardModalStack",
+          });
         }}
         title="Windowed Modals"
       />
       <Button
         onPress={() => {
           console.log("OK");
-          navigate("FullScreenModalStack");
+          push("FullScreenModalStack", {
+            previous: thisIndex ?? 0,
+            type: "FullScreenModalStack",
+          });
         }}
         title="Full Screen Modals"
       />
       <Button
         onPress={() => {
           console.log("OK");
-          navigate("InfiniteScreen2");
+          push("InfiniteScreen", {
+            previous: thisIndex ?? 0,
+            type: "InfiniteScreen",
+          });
         }}
-        title="Vanilla Navigation"
+        title="Push Navigation"
       />
+      {blockBackCallback ? (
+        <Button
+          onPress={() => {
+            blockBackCallback();
+          }}
+          title="Block Back"
+        />
+      ) : null}
     </View>
   );
 };

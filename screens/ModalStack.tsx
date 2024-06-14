@@ -4,8 +4,9 @@ import * as React from "react";
 import { View, Text, Pressable } from "react-native";
 
 import { modalStackDefaultOptions } from "../navigation/ScreenOptions";
-import { InfiniteScreen } from "./InfiniteScreen";
+
 import { chevron, exit } from "../MockScreens";
+import { InfiniteScreen } from "./InfiniteScreen";
 
 const InnerStack = createNativeStackNavigator();
 

@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { Home as Home } from "./MockScreens";
+
 import {
   mobileWindowedModalStackOptions,
   mobileFullscreenModalStackOptions,
@@ -15,6 +15,7 @@ import {
   FullscreenModalStack,
   ScreenStack,
 } from "./screens/ModalStack";
+import { Home } from "./MockScreens";
 import { InfiniteScreen } from "./screens/InfiniteScreen";
 
 const Stack = createNativeStackNavigator();
@@ -54,14 +55,14 @@ const Main = () => {
             : mobileFullscreenModalStackOptions
         }
       />
-      {/* <Stack.Screen
-        name="ScreenStack"
-        component={ScreenStack}
+      <Stack.Screen
+        name="InfiniteScreen"
+        component={InfiniteScreen}
         options={{
-          headerShown: false,
+          headerStyle: { backgroundColor: "grey" },
+          headerTintColor: "white",
         }}
-      /> */}
-      <Stack.Screen name="InfiniteScreen2" component={InfiniteScreen} />
+      />
     </Stack.Navigator>
   );
 };
