@@ -63,7 +63,16 @@ export const InfiniteScreen = ({ route }: any) => {
   useLayoutEffect(() => {
     setOptions({
       title: title.current,
-      headerBackImageSource: backImage.current,
+      // headerBackImageSource: {
+      //   uri: "x",
+      //   width: 50,
+      //   height: 50,
+      // },
+      // headerTintColor: "white",
+      headerBackImageSource:
+        thisIndex % 2 === 0
+          ? require("../img/chevron.png")
+          : require("../img/x.png"),
 
       headerRight: () => (
         <Pressable

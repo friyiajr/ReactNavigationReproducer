@@ -60,7 +60,7 @@ const Main = () => {
         component={InfiniteScreen}
         options={{
           headerStyle: { backgroundColor: "grey" },
-          headerTintColor: "white",
+          // headerTintColor: "white",
         }}
       />
     </Stack.Navigator>

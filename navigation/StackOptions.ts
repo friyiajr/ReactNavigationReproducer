@@ -24,7 +24,6 @@ export const tabletWindowedModalStackOptions: NativeStackNavigationOptions =  {
   },
   animationTypeForReplace: "push",
   animation: Platform.OS === 'ios' ? "fade_from_bottom" : 'fade', 
-  
 }
 
 export const mobileFullscreenModalStackOptions: NativeStackNavigationOptions = {

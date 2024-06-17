@@ -6,7 +6,7 @@ export const modalStackDefaultOptions: NativeStackNavigationOptions = {
     backgroundColor: "grey",
   },
   headerBlurEffect: "systemThickMaterial",
-  headerTintColor: "white",
+  // headerTintColor: "white",
   headerBackVisible: true,
   headerBackTitleVisible: false
 }

@@ -36,7 +36,7 @@ export const ScreenStack = () => {
       <InnerStack.Navigator
         screenOptions={{
           headerStyle: { backgroundColor: "black" },
-          headerTintColor: "white",
+          // headerTintColor: "white",
           headerBackTitleVisible: false,
         }}
       >
